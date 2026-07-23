@@ -1,6 +1,7 @@
 const Firm = require('../models/Firm');
 const Vendor = require('../models/Vendor');
 const multer = require('multer');
+const path = require("path");
 
     const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -8,7 +9,7 @@ const multer = require('multer');
     },
 
     filename: function (req, file, cb) {
-        cb(null, Date.now() + Path.extname(file.originalname));
+        cb(null, Date.now() + path.extname(file.originalname));
     }
     });
 
@@ -22,7 +23,7 @@ const addFirm = async(req , res) =>{
 
         const vendor = await Vendor.findById(req.vendorId);
         if(!vendor){
-            res.status(404).json({message: "vendor not found"})
+            return res.status(404).json({message: "vendor not found"})
         }
 
         const firm = new Firm({
